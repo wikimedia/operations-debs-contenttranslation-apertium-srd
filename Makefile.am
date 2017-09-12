@@ -2,14 +2,19 @@
 ## Makefile for apertium-srd
 ###############################################################################
 
-VERSION=0.9.0
+VERSION=0.10.0
 LANG1=srd
 BASENAME=apertium-$(LANG1)
+
+VAR1=#deixar en blanc
+VAR2=_meridional
+
 
 TARGETS_COMMON =			\
 	$(LANG1).automorf.bin		\
 	$(LANG1).automorf.att.gz	\
-	$(LANG1).autogen.bin		\
+	$(LANG1)$(VAR1).autogen.bin		\
+	$(LANG1)$(VAR2).autogen.bin		\
 	$(LANG1).autogen.att.gz		\
 	$(LANG1).autopgen.bin		\
 	$(LANG1).rlx.bin
@@ -21,9 +26,21 @@ TARGETS_COMMON =			\
 ## Sardinian transducer
 ###############################################################################
 
-$(LANG1).autogen.bin: $(BASENAME).$(LANG1).dix .deps/.d
+.deps/$(BASENAME).$(LANG1).srd.dix: $(BASENAME).$(LANG1).dix .deps/.d
 	apertium-validate-dictionary $<
-	lt-comp rl $< $@ $(BASENAME).$(LANG1).acx
+	python genvdix.py sep $< >$@
+
+.deps/$(BASENAME).$(LANG1).srd_meridional.dix: $(BASENAME).$(LANG1).dix .deps/.d
+	apertium-validate-dictionary $<
+	python genvdix.py mer $< >$@
+
+$(LANG1)$(VAR1).autogen.bin: .deps/$(BASENAME).$(LANG1).srd.dix
+	apertium-validate-dictionary $<
+	lt-comp -v sep rl $< $@ $(BASENAME).$(LANG1).acx
+
+$(LANG1)$(VAR2).autogen.bin: .deps/$(BASENAME).$(LANG1).srd_meridional.dix 
+	apertium-validate-dictionary $<
+	lt-comp -v mer rl $< $@ $(BASENAME).$(LANG1).acx
 
 $(LANG1).automorf.bin: $(BASENAME).$(LANG1).dix
 	apertium-validate-dictionary $<
@@ -78,7 +95,7 @@ modes/$(LANG1)-morph.mode: modes.xml
 
 noinst_DATA=modes/$(LANG1)-morph.mode
 
-install-data-local:
+install-data-local: install-modes
 	test -d $(DESTDIR)$(apertium_srd_srcdir) || mkdir -p $(DESTDIR)$(apertium_srd_srcdir)
 	$(INSTALL_DATA) $(BASENAME).$(LANG1).dix $(DESTDIR)$(apertium_srd_srcdir)
 	$(INSTALL_DATA) $(BASENAME).$(LANG1).rlx $(DESTDIR)$(apertium_srd_srcdir)
