@@ -1,3 +1,11 @@
+apertium-srd (0.10.0~r82237-1+wmf1) jessie-wikimedia; urgency=low
+
+  * New upstream release.
+  * Build-Depends on python.
+  * Updated debian/copyright.
+
+ -- Kartik Mistry <kartik@debian.org>  Tue, 12 Sep 2017 10:24:34 +0530
+
 apertium-srd (0.9.0~r72792-1+wmf1) jessie-wikimedia; urgency=low
 
   * Rebuild for Jessie.
