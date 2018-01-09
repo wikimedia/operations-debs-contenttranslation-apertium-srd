@@ -1,3 +1,11 @@
+apertium-srd (1.2.0~r82994-1+wmf1) jessie-wikimedia; urgency=low
+
+  * New upstream release.
+  * debian/control:
+    + Updated dependency on cg3.
+
+ -- Kartik Mistry <kartik@debian.org>  Tue, 09 Jan 2018 19:53:18 +0530
+
 apertium-srd (0.10.0~r82237-1+wmf1) jessie-wikimedia; urgency=low
 
   * New upstream release.
