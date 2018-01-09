@@ -2,7 +2,8 @@
 ## Makefile for apertium-srd
 ###############################################################################
 
-VERSION=0.10.0
+RELEASE=1.2
+VERSION=1.2.0
 LANG1=srd
 BASENAME=apertium-$(LANG1)
 
@@ -70,6 +71,7 @@ EXTRA_DIST=$(BASENAME).$(LANG1).dix		\
 		$(BASENAME).$(LANG1).rlx	\
 		$(BASENAME).post-$(LANG1).dix	\
 		$(LANG1).prob			\
+		genvdix.py	\
 		modes.xml
 
 ###############################################################################
